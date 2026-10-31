@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>{{ business_name }} | Café</title>
+<style>
+:root{--accent:{{ theme.primary }};--ink:{{ theme.ink }};--cream:{{ theme.soft }};--page:{{ theme.pale }};--hero:{{ theme.hero }};--line:{{ theme.border }};--footer:{{ theme.footer }}}*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff}html{scroll-behavior:smooth}a{color:inherit;text-decoration:none}button,textarea{font:inherit}header{position:sticky;top:0;background:#fffc;border-bottom:1px solid #ddd;backdrop-filter:blur(10px);padding:19px max(5vw,20px);display:flex;justify-content:space-between;gap:16px;align-items:center;z-index:4}header strong{font-size:20px}nav{display:flex;gap:19px;flex-wrap:wrap;font-size:14px}h1,h2,h3{font-family:Georgia,serif}h1{font-size:clamp(42px,6vw,75px);line-height:1.05;margin:0;max-width:850px}h2{font-size:clamp(32px,4vw,50px);margin:0 0 15px}p{line-height:1.6}section.main{padding:75px max(5vw,20px)}.hero{background:linear-gradient(130deg,#d8e9e0,#f5f0e7)}.eyebrow{letter-spacing:.15em;text-transform:uppercase;font-size:12px;font-weight:bold;color:var(--accent);margin-bottom:18px}.hero p{max-width:670px;font-size:18px;color:#527066}.button{display:inline-block;background:var(--accent);color:white;padding:13px 20px;border:0;border-radius:25px;font-weight:bold;cursor:pointer;margin-top:12px}.sub{color:#60776e}.menu-group{margin-top:36px}.menu-group h3{font-size:29px}.cards{display:flex;gap:15px;overflow-x:auto;padding:8px 0 22px;scroll-snap-type:x mandatory}.item{background:white;border:1px solid #e4e5de;border-radius:20px;overflow:hidden;flex:0 0 clamp(220px,27%,310px);scroll-snap-align:start}.item img,.photo-fallback{height:205px;width:100%;object-fit:cover;background:#d7e9e0}.photo-fallback{display:grid;place-items:center;font-size:55px;color:var(--accent)}.details{padding:18px}.details h4{margin:0}.details p{font-size:14px;color:#62766d}.about{background:var(--cream)}.about-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:40px}.frame{height:350px;border-radius:22px;overflow:hidden;background:linear-gradient(140deg,#c5ddd0,#eae3d9);position:relative}.slide{position:absolute;width:100%;height:100%;inset:0;object-fit:cover;opacity:0;transition:opacity .5s}.slide.active{opacity:1}.dots{display:flex;justify-content:center;gap:12px;margin-top:15px}.dot{background:#adbbb5;border:0;border-radius:50%;height:11px;width:11px;padding:0;cursor:pointer}.dot.active{background:var(--accent);transform:scale(1.2)}.review{background:var(--accent);color:white}.review-layout{display:grid;grid-template-columns:1fr 1fr;gap:18px}.panel{background:white;color:var(--ink);padding:22px;border-radius:20px}textarea{width:100%;min-height:165px;padding:14px;border:1px solid #d3ddd8;border-radius:12px;resize:vertical}label{display:block;font-weight:bold;margin-bottom:10px}.styles{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.style{padding:8px 12px;background:white;border:1px solid #baccc2;border-radius:18px;cursor:pointer}.style.active{background:#d8ebdf;border-color:var(--accent)}.muted{color:#668079;font-size:12px}.review-actions{display:flex;gap:10px;flex-wrap:wrap}.review-actions .button{margin-top:12px;flex:1;text-align:center}.share-button{background:white;color:var(--accent);border:1px solid var(--accent)}.msg{font-size:13px;min-height:18px}footer{background:#1f3930;color:#dae8df;padding:30px max(5vw,20px);font-size:13px}@media(max-width:700px){.about-grid,.review-layout{grid-template-columns:1fr}.frame{height:260px}.item{flex-basis:80%}nav{gap:10px}}
+
+body{background:var(--page);color:var(--ink)}
+header{background:var(--hero);border-bottom:1px solid var(--line)}header strong{color:var(--ink)}
+.hero{background:linear-gradient(125deg,var(--hero),var(--page))}
+.hero p,.sub,.details p{color:var(--ink);opacity:.78}
+#menu{background:var(--page)}
+.item,.panel{background:#fff;border-color:var(--line)}.photo-fallback{background:var(--hero)}
+.about{background:var(--cream)}.frame{background:var(--hero)}
+.review{background:var(--accent)}.review .panel{background:#fff}
+.style.active{background:var(--cream);border-color:var(--accent)}
+footer{background:var(--footer)}
+
+body[data-style="cozy"]{--radius:23px;font-family:Georgia,serif}
+body[data-style="cozy"] .item,body[data-style="cozy"] .panel,body[data-style="cozy"] .frame{border-radius:var(--radius)}
+body[data-style="cozy"] .button{border-radius:99px}body[data-style="cozy"] .hero{padding-top:100px;padding-bottom:100px}
+body[data-style="modern"]{font-family:Arial,Helvetica,sans-serif}
+body[data-style="modern"] h1,body[data-style="modern"] h2,body[data-style="modern"] h3{font-family:Arial,Helvetica,sans-serif;letter-spacing:-.045em}
+body[data-style="modern"] .item,body[data-style="modern"] .panel,body[data-style="modern"] .frame{border-radius:3px;box-shadow:none}
+body[data-style="modern"] .button,body[data-style="modern"] textarea,body[data-style="modern"] .style{border-radius:3px}
+body[data-style="modern"] .hero{background:var(--page);border-bottom:3px solid var(--accent)}
+body[data-style="modern"] .cards{gap:24px}body[data-style="modern"] header{padding-top:26px;padding-bottom:26px}
+body[data-style="playful"]{font-family:Arial,Helvetica,sans-serif}
+body[data-style="playful"] h1,body[data-style="playful"] h2,body[data-style="playful"] h3{font-family:Arial,Helvetica,sans-serif;font-weight:900;letter-spacing:-.035em}
+body[data-style="playful"] h1{font-size:clamp(48px,7.2vw,100px)}
+body[data-style="playful"] .item,body[data-style="playful"] .panel{border-radius:30px;border:3px solid var(--accent);box-shadow:8px 9px 0 var(--line)}
+body[data-style="playful"] .button{border-radius:14px;transform:rotate(-1deg)}
+body[data-style="playful"] .frame{border-radius:36px;transform:rotate(1deg)}
+body[data-style="playful"] .hero{background:linear-gradient(135deg,var(--hero),var(--cream),var(--page));min-height:530px}
+body[data-style="elegant"]{font-family:Georgia,'Times New Roman',serif;letter-spacing:.012em}
+body[data-style="elegant"] h1,body[data-style="elegant"] h2{font-weight:400;letter-spacing:-.025em}
+body[data-style="elegant"] .hero{text-align:center;background:var(--page);padding-block:125px}
+body[data-style="elegant"] .hero p{margin-inline:auto}
+body[data-style="elegant"] .item,body[data-style="elegant"] .panel{border-radius:0;border:1px solid var(--line);box-shadow:0 12px 35px #0000000a}
+body[data-style="elegant"] .frame{border-radius:0}
+body[data-style="elegant"] .button{border-radius:0;letter-spacing:.10em;text-transform:uppercase}
+body[data-style="elegant"] nav{letter-spacing:.12em;text-transform:uppercase}
+@media(max-width:700px){body[data-style="elegant"] .hero{padding-block:80px}}
+.menu-subcategory{margin:30px 0 16px;font-size:1.25rem;font-weight:700;}
+</style></head>
+<body data-style="{{ style_id }}">
+<header><strong>{{ business_name }}</strong><nav><a href="#review">Review helper</a><a href="#menu">Menu</a><a href="#about">Our space</a></nav></header>
+<section class="main hero"><div class="eyebrow">Welcome to {{ business_name }}</div><h1>{{ tagline }}</h1><p>{{ about }}</p><a class="button" href="#review">Try the review helper</a></section>
+<section class="main review" id="review"><h2>Make your review clearer</h2><p>Enter your thoughts, select a style, and revise your writing.</p>
+<div class="review-layout"><div class="panel"><label for="rough">Your review</label><textarea id="rough" maxlength="450" placeholder="The coffee was great but the wait was a bit long..."></textarea>
+<div class="styles"><button class="style active" type="button" data-tone="natural">Natural</button><button class="style" type="button" data-tone="friendly">Friendly</button><button class="style" type="button" data-tone="concise">Short</button><button class="style" type="button" data-tone="polished">Polished</button></div>
+<button type="button" id="improve" class="button">Improve my review</button><p class="muted">Real AI rewriting works when this page is hosted on the generator server. It is not available when opened as a local HTML file.</p></div>
+<div class="panel"><label for="improved">Revised review</label><textarea id="improved" placeholder="Your revised text will appear here..."></textarea><div class="review-actions"><button type="button" id="copy" class="button">Copy review</button><button type="button" id="share" class="button share-button">Share review</button></div><p id="message" class="msg" aria-live="polite"></p></div></div></section>
+<section class="main" id="menu"><h2>Our menu</h2><p class="sub">Explore what we offer.</p>
+{% for group in groups %}<section class="menu-group"><h3>{{ group.name }}</h3>
+{% for section in group.sections %}{% if section.name %}<h4 class="menu-subcategory">{{ section.name }}</h4>{% endif %}<div class="cards">
+{% for item in section["items"] %}<article class="item">
+{% if item.image %}<img src="{{ item.image }}" alt="{{ item.name }}" loading="lazy" onerror="this.style.display='none'">
+{% else %}<div class="photo-fallback" aria-hidden="true">✦</div>{% endif %}
+<div class="details"><h4>{{ item.name }}</h4><p>{{ item.description }}</p></div></article>{% endfor %}
+</div>{% endfor %}</section>{% else %}<p>Menu items coming soon.</p>{% endfor %}</section>
+<section class="main about" id="about"><div class="about-grid"><div><div class="eyebrow">Coffeehouse experience</div><h2>A place to stay, work, and connect.</h2><p>{{ about }}</p></div><div>
+{% if environment_images %}<div class="frame">{% for image in environment_images %}<img class="slide{% if loop.first %} active{% endif %}" src="{{ image }}" alt="{{ business_name }} coffeehouse photo {{ loop.index }}" {% if not loop.first %}loading="lazy"{% endif %} onerror="this.dataset.broken='1';this.style.display='none'">{% endfor %}</div>
+<div class="dots">{% for image in environment_images %}<button type="button" class="dot{% if loop.first %} active{% endif %}" data-index="{{ loop.index0 }}" aria-label="Show photo {{ loop.index }}"></button>{% endfor %}</div>
+{% else %}<div class="frame" role="img" aria-label="Decorative coffeehouse-inspired background"></div>{% endif %}
+</div></div></section>
+<footer>Made for {{ business_name }} · Demo website generated with AI-assisted content. Confirm images and content before publishing.</footer>
+<script>
+(()=>{const slides=[...document.querySelectorAll('.slide')],dots=[...document.querySelectorAll('.dot')];let i=0,timer;function show(n){i=n;slides.forEach((s,j)=>s.classList.toggle('active',j===n));dots.forEach((d,j)=>d.classList.toggle('active',j===n))}function start(){clearInterval(timer);if(slides.length>1)timer=setInterval(()=>show((i+1)%slides.length),3000)}dots.forEach((d,n)=>d.addEventListener('click',()=>{show(n);start()}));start();let tone='natural';document.querySelectorAll('.style').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.style').forEach(x=>x.classList.remove('active'));b.classList.add('active');tone=b.dataset.tone}));document.getElementById('improve').onclick=async()=>{const review=document.getElementById('rough').value.trim(),message=document.getElementById('message');if(!review){message.textContent='Enter a review first.';return}if(location.protocol==='file:'){message.textContent='AI rewriting requires a server. Open this website using the generator server or deploy its backend.';return}message.textContent='Improving your review...';try{const r=await fetch('/api/revise',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({review,tone})});const d=await r.json();if(!r.ok)throw new Error(d.error||'AI request failed');document.getElementById('improved').value=d.revisedReview;message.textContent='Ready to edit or copy.'}catch(e){message.textContent=e.message||'Could not connect to review helper.'}};document.getElementById('copy').onclick=async()=>{const field=document.getElementById('improved'),value=field.value.trim(),message=document.getElementById('message');if(!value){message.textContent='No revised review to copy yet.';return}try{await navigator.clipboard.writeText(value);message.textContent='Review copied!'}catch{field.focus();field.select();try{if(document.execCommand('copy'))message.textContent='Review copied!';else message.textContent='Select the text and copy it manually.'}catch{message.textContent='Select the text and copy it manually.'}}};document.getElementById('share').onclick=async()=>{const value=document.getElementById('improved').value.trim(),message=document.getElementById('message');if(!value){message.textContent='No revised review to share yet.';return}if(!navigator.share){message.textContent='Sharing is not supported in this browser. Use Copy review instead.';return}try{await navigator.share({title:'My café review',text:value});message.textContent='Review shared.'}catch(error){if(error.name!=='AbortError')message.textContent='Sharing failed. Use Copy review instead.'}}})();
+</script></body></html>

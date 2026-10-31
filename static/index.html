@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Café Site Studio · Builder</title>
+<style>
+:root{--green:#006241;--ink:#1e3932;--muted:#64786d}*{box-sizing:border-box}body{margin:0;font:15px Arial,Helvetica,sans-serif;background:#f3f6f3;color:var(--ink)}header{padding:24px max(3vw,20px);background:#fff;border-bottom:1px solid #dce6df}h1{margin:4px 0;font:700 33px Georgia,serif}header p,.helper{color:var(--muted);line-height:1.5}main{display:grid;grid-template-columns:minmax(320px,480px) minmax(0,1fr);gap:22px;max-width:1700px;margin:auto;padding:24px}.panel{background:#fff;border:1px solid #e1e8e3;border-radius:18px;padding:22px;box-shadow:0 5px 20px #183f2b0a}form{display:grid;gap:16px}.field label{display:block;font-weight:700;margin-bottom:7px}input,textarea,select{width:100%;padding:11px;border:1px solid #cbd7cf;border-radius:9px;color:var(--ink);font:inherit}textarea{resize:vertical}.primary,.secondary,.remove{cursor:pointer;border-radius:10px;padding:11px 14px;font-weight:700}.primary{background:var(--green);border:1px solid var(--green);color:#fff}.secondary{border:1px solid #a9c4b3;background:#fff;color:var(--green)}.remove{border:1px solid #e2b4b4;background:#fff;color:#923b3b}.primary:disabled,.secondary:disabled{opacity:.55;cursor:not-allowed}.row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}.row.between{justify-content:space-between}.group{border:1px solid #d8e4dc;border-radius:13px;padding:14px;background:#fcfefc}.group h3{margin:0 0 12px}.item{border-top:1px solid #e4eae5;padding:12px 0;display:grid;gap:8px}.item:first-child{border-top:0}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.upload-row{display:flex;align-items:center;gap:10px}.thumb{height:70px;width:85px;flex:none;object-fit:cover;border-radius:9px;background:#ecf3ed}.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:12px 0}.gallery-cell{position:relative}.gallery-cell img{width:100%;height:95px;object-fit:cover;border-radius:10px}.gallery-cell button{position:absolute;top:3px;right:3px;background:#fff;border:1px solid #ddd;border-radius:6px;cursor:pointer}.note{background:#eaf3ec;border-radius:10px;padding:12px;color:#3a6854;line-height:1.55;font-size:13px}.message{min-height:23px;margin-top:12px}.error{color:#a02c2c}.success{color:#136441}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;flex-wrap:wrap}.top h2{font:700 25px Georgia,serif;margin:0}iframe{width:100%;height:76vh;min-height:570px;border:1px solid #e1e7e3;border-radius:12px;background:#fff}.section-label{margin:8px 0 0;font:700 24px Georgia,serif}.helper{font-size:12px;margin:5px 0}.mini{font-size:13px}.import-progress[hidden]{display:none!important}.import-progress{margin-top:13px;padding:12px;border-radius:10px;background:#edf5f0}.import-progress progress{display:block;width:100%;height:12px;margin:10px 0;accent-color:var(--green)}.subheading{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);font-weight:bold}@media(max-width:1100px){main{grid-template-columns:1fr}iframe{height:650px}}
+</style></head><body>
+<header><div class="subheading">AI-assisted website generator</div><h1>Café Site Studio</h1></header>
+<main><div class="panel"><form id="builder">
+<div class="field"><label for="businessName">Business name</label><input id="businessName" maxlength="80" required placeholder="Automatically filled after importing"></div>
+<div class="grid2"><div class="field"><label for="vibe">Website style (layout & typography)</label><select id="vibe"><option>cozy and welcoming</option><option>modern and minimal</option><option>bright and playful</option><option>elegant and calm</option></select></div><div class="field"><label for="color">Accent colour (full website theme)</label><input id="color" type="color" value="#006241"></div></div>
+<p class="helper">Style changes the layout, typefaces and card shapes. Accent colour sets the coordinated header, page background, buttons and review section colours.</p><div class="field"><label for="notes">About the café</label><textarea id="notes" maxlength="600" rows="3" placeholder="Tell us a little about your café, and AI will expand your ideas into a welcoming description. Leave it blank, and AI will create one based on your café’s name and menu."></textarea></div>
+<div class="group" id="importBox">
+  <h3>Import restaurant details from a website</h3>
+  <div class="field"><label for="sourceUrl">Restaurant website or menu URL</label><input type="url" id="sourceUrl" placeholder="https://restaurant.example/menu"></div>
+  <div class="row" style="margin-top:10px"><button type="button" class="secondary" id="importMenu">Import website automatically</button><span class="mini" id="importStatus" role="status" aria-live="polite"></span></div>
+  <div id="importProgress" class="import-progress" hidden><div class="row between"><strong id="importStage">Starting import…</strong><span class="mini" id="importNumbers"></span></div><progress id="importBar" max="100" value="0"></progress><p class="helper" id="importProgressNote">Processing website information…</p></div>
+  <p class="helper">Import replaces the current editor list only after a successful import. You can then add, edit, remove and reassign photos before generating.</p>
+</div>
+<div class="row between"><h2 class="section-label">Menu items</h2><button type="button" class="secondary" id="addItem">+ Add item</button></div>
+<p class="helper">Product images import automatically where available. You can optionally attach or replace an image on any item.</p>
+<div id="items"></div>
+<div class="group"><h3>Environment gallery</h3><label for="galleryFiles" class="mini">Add or replace environment photos (optional)</label><input id="galleryFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple><p class="helper">Environment photos are uploaded manually. You can add multiple photos in batches. The slideshow automatically rotates every 3 seconds and shows clickable dots. Each image is compressed before export.</p><div class="gallery" id="gallery"></div><p class="helper" id="galleryCount">No gallery images yet.</p></div>
+<button class="primary" type="submit" id="generate">Generate website with AI</button>
+
+</form><div id="message" class="message" role="status" aria-live="polite"></div></div>
+<div class="panel"><div class="top"><h2>Website preview</h2><div class="row"><button class="secondary" type="button" id="download" disabled>Download HTML</button></div></div><iframe id="preview" title="Generated café website" sandbox="allow-scripts allow-same-origin"></iframe><p class="helper">To test the live review assistant, type in the generated website's review box and click “Improve my review.”</p></div>
+</main>
+<script>
+const items=document.getElementById('items'),gallery=document.getElementById('gallery'),galleryCount=document.getElementById('galleryCount');
+const msg=document.getElementById('message'),generate=document.getElementById('generate'),preview=document.getElementById('preview'),download=document.getElementById('download');
+let menu=[],photos=[],html='';let itemId=0;
+preview.srcdoc='<!doctype html><html><body style="font:16px Arial;text-align:center;padding:80px;color:#64786d">Complete the form and generate your website to preview it here.</body></html>';
+function report(text,kind=''){msg.textContent=text;msg.className='message '+kind}
+async function encodeImage(file){
+ if(!['image/jpeg','image/png','image/webp'].includes(file.type))throw new Error('Please choose a JPEG, PNG, or WebP image.');
+ if(file.size>15*1024*1024)throw new Error('Each original photo must be 15 MB or smaller.');
+ const bitmap=await createImageBitmap(file);
+ const scale=Math.min(1,1400/Math.max(bitmap.width,bitmap.height));
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+ canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close();
+ return canvas.toDataURL('image/jpeg',0.76);
+}
+function addItem(data={category:'',subcategory:'',name:'',description:'',image:''}){const id=++itemId;const record={...data,id};menu.push(record);renderOne(record);return record}
+function renderItems(){items.replaceChildren();menu.forEach(renderOne)}
+function renderOne(item){
+ const el=document.createElement('div');el.className='group item';
+ const head=document.createElement('div');head.className='row between';const nameLabel=document.createElement('strong');nameLabel.textContent=item.name||'New menu item';const remove=document.createElement('button');remove.type='button';remove.className='remove mini';remove.textContent='Remove item';remove.onclick=()=>{menu=menu.filter(x=>x.id!==item.id);renderItems()};head.append(nameLabel,remove);el.append(head);
+ const grid=document.createElement('div');grid.className='grid2';
+ for(const [key,placeholder] of [['category','Main category'],['subcategory','Subcategory (optional)'],['name','Product name']]){const input=document.createElement('input');input.placeholder=placeholder;input.value=item[key];input.setAttribute('aria-label',placeholder);input.oninput=()=>{item[key]=input.value;if(key==='name')nameLabel.textContent=input.value||'New menu item'};grid.append(input)}el.append(grid);
+ const desc=document.createElement('textarea');desc.rows=2;desc.placeholder='Product description';desc.value=item.description;desc.oninput=()=>item.description=desc.value;el.append(desc);
+ const imageRow=document.createElement('div');imageRow.className='upload-row';const thumb=document.createElement('img');thumb.className='thumb';thumb.alt='Assigned product photo';if(item.image)thumb.src=item.image;else thumb.style.visibility='hidden';
+ const file=document.createElement('input');file.type='file';file.accept='image/png,image/jpeg,image/webp';file.setAttribute('aria-label','Upload photo for '+(item.name||'this menu item'));file.onchange=async()=>{try{if(!file.files[0])return;item.image=await encodeImage(file.files[0]);thumb.src=item.image;thumb.style.visibility='visible';report('Photo attached to '+(item.name||'menu item')+'.','success')}catch(e){report(e.message,'error')}};imageRow.append(thumb,file);el.append(imageRow);items.append(el)
+}
+function renderGallery(){gallery.replaceChildren();photos.forEach((image,index)=>{const cell=document.createElement('div');cell.className='gallery-cell';const img=document.createElement('img');img.src=image;img.alt='Gallery photo '+(index+1);const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label','Remove gallery photo '+(index+1));remove.onclick=()=>{photos.splice(index,1);renderGallery()};cell.append(img,remove);gallery.append(cell)});galleryCount.textContent=photos.length+' gallery photo(s) selected.'}
+document.getElementById('importMenu').onclick=async()=>{
+ const url=document.getElementById('sourceUrl').value.trim();
+ const button=document.getElementById('importMenu');
+ const info=document.getElementById('importStatus');
+ const panel=document.getElementById('importProgress');
+ const bar=document.getElementById('importBar');
+ const stage=document.getElementById('importStage');
+ const numbers=document.getElementById('importNumbers');
+ const note=document.getElementById('importProgressNote');
+ if(!url){report('Enter the restaurant menu URL first.','error');return}
+ if(menu.some(x=>x.name.trim())&&!confirm('Replace existing menu items with the imported menu after successful import?'))return;
+ button.disabled=true;panel.hidden=false;bar.value=0;stage.textContent='Starting import';info.textContent='Importing…';
+ try{
+  const start=await fetch('/api/import-jobs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url})});
+  const job=await start.json();if(!start.ok)throw new Error(job.detail||'Could not start import');
+  let data;
+  while(true){
+   await new Promise(resolve=>setTimeout(resolve,850));
+   const response=await fetch('/api/import-jobs/'+encodeURIComponent(job.jobId));
+   const status=await response.json();
+   if(!response.ok)throw new Error(status.detail||'Could not check import progress');
+   stage.textContent=status.stage||'Processing';bar.value=status.percent||0;
+   numbers.textContent=(status.pagesChecked||0)+' pages · '+(status.productsFound||0)+' candidates';
+   note.textContent=status.message||'Processing available menu data';
+   if(status.state==='failed')throw new Error(status.error||'Import failed');
+   if(status.state==='complete'){data=status.result;break}
+  }
+  const stats=data.diagnostics||{};
+  const detail=`Checked ${stats.pagesChecked||0} pages; AI analyzed ${stats.aiPagesAnalyzed||0}; added ${stats.aiProductsAdded||0} products.`;
+  if(!data.items||!data.items.length){info.textContent='No products found — '+detail;report('No supported products could be verified. '+detail+' '+(data.warnings||[]).join(' '),'error');return}
+  menu=[];itemId=0;items.replaceChildren();for(const item of data.items)addItem(item);
+  if(data.businessName)document.getElementById('businessName').value=data.businessName;
+  info.textContent=data.items.length+' verified menu products. '+detail;
+  report('Imported '+data.items.length+' menu items. '+(data.warnings||[]).join(' '),'success');
+ }catch(err){info.textContent='Import failed';stage.textContent='Import failed';report(err.message,'error')}
+ finally{button.disabled=false}
+};
+document.getElementById('addItem').onclick=()=>{const last=menu[menu.length-1];addItem({category:last?.category||'',subcategory:last?.subcategory||'',name:'',description:'',image:''});const card=items.lastElementChild;card?.scrollIntoView({behavior:'smooth',block:'center'});card?.querySelector('input[aria-label="Product name"]')?.focus({preventScroll:true});report('New item added. Enter a product name and edit its category if needed.','success')};
+document.getElementById('galleryFiles').onchange=async e=>{try{const files=[...e.target.files];for(const file of files){photos.push(await encodeImage(file))}renderGallery();report('Environment photos attached.','success')}catch(err){report(err.message,'error')}finally{e.target.value=''}};
+addItem();
+document.getElementById('builder').onsubmit=async e=>{e.preventDefault();
+ const valid=menu.filter(m=>m.category.trim()&&m.name.trim());if(!valid.length){report('Add at least one menu item with category and name.','error');return}
+ report('Generating site and embedding uploaded photos...');generate.disabled=true;download.disabled=true;
+ try{const payload={businessName:document.getElementById('businessName').value,vibe:document.getElementById('vibe').value,color:document.getElementById('color').value,notes:document.getElementById('notes').value,menu:valid,environmentImages:photos};
+ const response=await fetch('/api/generate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+ let data;try{data=await response.json()}catch{throw new Error('Server returned an invalid response. Total images may be too large; try fewer or smaller photos.')}
+ if(!response.ok)throw new Error(data.error||'Generation failed');html=data.html;preview.srcdoc=html;download.disabled=false;report('Website generated. Menu photos and '+photos.length+' gallery images embedded. Test the AI reviser in preview.','success');
+ }catch(error){report(error.message,'error')}finally{generate.disabled=false}};
+download.onclick=()=>{if(!html)return;const a=document.createElement('a'),url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));a.href=url;a.download=(document.getElementById('businessName').value.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'cafe')+'-website.html';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)};
+
+</script></body></html>
